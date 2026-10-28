@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: eatandrate-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eatandrate
+      MYSQL_USER: eatandrate
+      MYSQL_PASSWORD: eatandrate
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  dbdata:
