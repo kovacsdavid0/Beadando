@@ -1,6 +1,0 @@
-@Eat_Rate_HostAddress = http://localhost:5089
-
-GET {{Eat_Rate_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
