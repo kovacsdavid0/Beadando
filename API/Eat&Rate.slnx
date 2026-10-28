@@ -1,5 +1,0 @@
-<Solution>
-  <Project Path="Eat&amp;Rate/API.csproj" />
-  <Project Path="Frontend/Frontend.csproj" />
-  <Project Path="Models/EatAndRate.Shared.csproj" />
-</Solution>
