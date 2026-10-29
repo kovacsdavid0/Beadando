@@ -4,19 +4,32 @@ services:
     container_name: eatandrate-db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: eatandrate
       MYSQL_USER: eatandrate
       MYSQL_PASSWORD: eatandrate
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
-      - dbdata:/var/lib/mysql
+      - db-data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-prootpass"]
       interval: 5s
       timeout: 5s
       retries: 20
 
+  api:
+    build: ./API
+    container_name: eatandrate-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=db;Port=3306;Database=eatandrate;User=eatandrate;Password=eatandrate;"
+    ports:
+      - "8080:8080"
+
 volumes:
-  dbdata:
+  db-data:

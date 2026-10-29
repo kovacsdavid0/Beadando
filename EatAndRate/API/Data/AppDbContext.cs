@@ -62,7 +62,7 @@ namespace API.Data
                     .WithMany(r => r.Reviews)
                     .HasForeignKey(r => r.RestaurantId)
                     .OnDelete(DeleteBehavior.Cascade);
-                e.HasOne(r.User)
+                e.HasOne(r => r.User)
                     .WithMany(u => u.Reviews)
                     .HasForeignKey(r => r.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
