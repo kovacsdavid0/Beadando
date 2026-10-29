@@ -18,39 +18,53 @@ namespace API.Data
         {
             modelBuilder.Entity<User>(e =>
             {
-                e.Property(u => u.Username).HasMaxLength(50);
-                e.Property(u => u.Email).HasMaxLength(100);
-                e.Property(u => u.PasswordHash).HasMaxLength(255);
+                e.HasKey(u => u.Id);
+                e.Property(u => u.Username).HasMaxLength(50).IsRequired();
+                e.Property(u => u.Email).HasMaxLength(100).IsRequired();
+                e.Property(u => u.PasswordHash).HasMaxLength(255).IsRequired();
                 e.HasIndex(u => u.Username).IsUnique();
                 e.HasIndex(u => u.Email).IsUnique();
             });
 
             modelBuilder.Entity<Restaurant>(e =>
             {
-                e.Property(r => r.Name).HasMaxLength(100);
+                e.HasKey(r => r.Id);
+                e.Property(r => r.Name).HasMaxLength(100).IsRequired();
                 e.Property(r => r.Address).HasMaxLength(200);
                 e.Property(r => r.City).HasMaxLength(100);
-                e.Property(r => r.FranchiseId).HasMaxLength(100);
+                e.HasOne(r => r.Franchise)
+                    .WithMany(f => f.Restaurants)
+                    .HasForeignKey(r => r.FranchiseId)
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Franchise>(e =>
             {
-                e.Property(r => r.Name).HasMaxLength(100);
-                e.HasIndex(r => new { r.FranchiseId }).IsUnique();
-                e.HasIndex(r => new { r.Name }).IsUnique();
+                e.HasKey(f => f.Id);
+                e.Property(f => f.Name).HasMaxLength(100).IsRequired();
+                e.HasIndex(f => new { f.Name }).IsUnique();
             });
 
             modelBuilder.Entity<Review>(e =>
             {
+                e.HasKey(r => r.Id);
                 e.Property(r => r.Comment).HasMaxLength(1000);
-                e.ToTable(t => t.HasCheckConstraint("CK_Review_Rating", "Rating BETWEEN 1 AND 5"));
+                e.ToTable(t =>
+                {
+                    t.HasCheckConstraint("CK_Review_ServiceRating", "ServiceRating BETWEEN 1 AND 5");
+                    t.HasCheckConstraint("CK_Review_FoodRating", "FoodRating BETWEEN 1 AND 5");
+                    t.HasCheckConstraint("CK_Review_AtmosphereRating", "AtmosphereRating BETWEEN 1 AND 5");
+                });
 
-                // Egy felhasználó egy éttermet csak egyszer értékelhet
                 e.HasIndex(r => new { r.UserId, r.RestaurantId }).IsUnique();
 
                 e.HasOne(r => r.Restaurant)
                     .WithMany(r => r.Reviews)
                     .HasForeignKey(r => r.RestaurantId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                e.HasOne(r.User)
+                    .WithMany(u => u.Reviews)
+                    .HasForeignKey(r => r.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
