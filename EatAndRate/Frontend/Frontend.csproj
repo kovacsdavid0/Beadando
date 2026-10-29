@@ -9,11 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Inter_18pt-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Styles\Buttons.xaml" />
+    <Page Remove="Styles\LightTheme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Inter_18pt-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Styles\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Styles\LightTheme.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

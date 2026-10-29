@@ -4,6 +4,23 @@
              xmlns:local="clr-namespace:Frontend"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/LightTheme.xaml"/>
+                <ResourceDictionary Source="Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/TextBoxes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <FontFamily x:Key="InterFont">/Fonts/#Inter</FontFamily>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource InterFont}"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource InterFont}"/>
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Háttér -->
+    <SolidColorBrush x:Key="Background"        Color="#F8F9FA"/>
+    <SolidColorBrush x:Key="Surface"           Color="White"/>
+    <SolidColorBrush x:Key="SurfaceAlt"        Color="#E9ECEF"/>
+
+    <!-- Szöveg -->
+    <SolidColorBrush x:Key="PrimaryText"       Color="#212529"/>
+    <SolidColorBrush x:Key="SecondaryText"     Color="#495057"/>
+    <SolidColorBrush x:Key="MutedText"         Color="#6C757D"/>
+    <SolidColorBrush x:Key="PlaceholderText"   Color="#ADB5BD"/>
+
+    <!-- Keretek -->
+    <SolidColorBrush x:Key="Border"            Color="#DEE2E6"/>
+    <SolidColorBrush x:Key="BorderStrong"      Color="#CED4DA"/>
+
+    <!-- Sidebar -->
+    <SolidColorBrush x:Key="SidebarBackground" Color="#212529"/>
+    <SolidColorBrush x:Key="SidebarHover"      Color="#343A40"/>
+    <SolidColorBrush x:Key="SidebarText"       Color="#DEE2E6"/>
+
+    <!-- Primary gomb -->
+    <SolidColorBrush x:Key="PrimaryButton"        Color="#4F46E5"/>
+    <SolidColorBrush x:Key="PrimaryButtonHover"   Color="#4338CA"/>
+    <SolidColorBrush x:Key="PrimaryButtonPressed" Color="#3730A3"/>
+    <SolidColorBrush x:Key="PrimaryButtonText"    Color="White"/>
+
+    <!-- Secondary gomb -->
+    <SolidColorBrush x:Key="SecondaryButton"        Color="#E9ECEF"/>
+    <SolidColorBrush x:Key="SecondaryButtonHover"   Color="#DEE2E6"/>
+    <SolidColorBrush x:Key="SecondaryButtonPressed" Color="#CED4DA"/>
+    <SolidColorBrush x:Key="SecondaryButtonText"    Color="#212529"/>
+
+    <!-- Danger gomb (törlés, kilépés) -->
+    <SolidColorBrush x:Key="DangerButton"        Color="#DC3545"/>
+    <SolidColorBrush x:Key="DangerButtonHover"   Color="#BB2D3B"/>
+    <SolidColorBrush x:Key="DangerButtonPressed" Color="#A02834"/>
+    <SolidColorBrush x:Key="DangerButtonText"    Color="White"/>
+
+    <!-- Letiltott állapot -->
+    <SolidColorBrush x:Key="DisabledBackground" Color="#E9ECEF"/>
+    <SolidColorBrush x:Key="DisabledText"       Color="#ADB5BD"/>
+
+    <!-- Státuszszínek -->
+    <SolidColorBrush x:Key="Success" Color="#198754"/>
+    <SolidColorBrush x:Key="Warning" Color="#FFC107"/>
+    <SolidColorBrush x:Key="Error"   Color="#DC3545"/>
+
+</ResourceDictionary>

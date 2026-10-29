@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Frontend.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
+        Title="LoginWindow" Height="450" Width="800"
+        Background="{DynamicResource Background}">
     <Grid>
-        
+        <Border BorderBrush="{DynamicResource Border}" BorderThickness="1" Margin="268,80,268,80" CornerRadius="8">
+            <Button Content="Bejelentkezés" Height="29" Width="170" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,213,0,0" Click="Button_Click" Style="{StaticResource PrimaryButtonStyle}"/>
+        </Border>
+        <TextBlock HorizontalAlignment="Center" Margin="0,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top"><Run Language="hu-hu" Text="Jelentkezz be."/></TextBlock>
+        <TextBox HorizontalAlignment="Center" Margin="0,178,0,0" Padding="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="24" TextChanged="TextBox_TextChanged"/>
+        <PasswordBox HorizontalAlignment="Center" Margin="0,228,0,0" VerticalAlignment="Top" Width="170" Height="24"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,98,0,0" Padding="1" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" FontFamily="#Inter" FontWeight="SemiBold"><Run Language="hu-hu" Text="Üdv újra!"/></TextBlock>
+        <Label Content="Nincs még fiókod? Regisztrálj!" HorizontalAlignment="Center" Margin="0,262,0,0" VerticalAlignment="Top" FontSize="10" Width="144"/>
+        <TextBlock HorizontalAlignment="Left" Margin="315,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.487,-0.784" FontSize="10"><Run Text="Felhasználónév"/><Run Language="hu-hu" Text=" vagy Email"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="315,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.487,-0.784" FontSize="10"><Run Language="hu-hu" Text="Jelszó"/></TextBlock>
+
     </Grid>
 </Window>
