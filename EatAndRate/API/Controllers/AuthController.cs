@@ -24,7 +24,6 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
         {
-            // A felhasználónév nem lehet e-mail formátumú, különben a bejelentkezésnél összeakadhat más e-mail címével
             if (dto.Username.Contains('@'))
                 return BadRequest("A felhasználónév nem tartalmazhat @ karaktert.");
 
@@ -46,7 +45,7 @@ namespace API.Controllers
             }
             catch (DbUpdateException)
             {
-                // Két egyidejű regisztrációnál az egyedi index dobja el a másodikat
+
                 return Conflict("A felhasználónév vagy az e-mail már foglalt.");
             }
 
