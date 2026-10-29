@@ -19,7 +19,9 @@ services:
       retries: 20
 
   api:
-    build: ./API
+    build:
+      context: .
+      dockerfile: API/Dockerfile
     container_name: eatandrate-api
     restart: unless-stopped
     depends_on:
