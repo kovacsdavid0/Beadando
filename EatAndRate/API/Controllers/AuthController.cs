@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Models;
+using API.Services;
 using EatAndRate.Shared.DTOs.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +13,21 @@ namespace API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AppDbContext _db;
+        private readonly TokenService _tokens;
 
-        public AuthController(AppDbContext db)
+        public AuthController(AppDbContext db, TokenService tokens)
         {
             _db = db;
+            _tokens = tokens;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Register(RegisterDto dto)
         {
+            // A felhasználónév nem lehet e-mail formátumú, különben a bejelentkezésnél összeakadhat más e-mail címével
+            if (dto.Username.Contains('@'))
+                return BadRequest("A felhasználónév nem tartalmazhat @ karaktert.");
+
             if (await _db.Users.AnyAsync(u => u.Username == dto.Username || u.Email == dto.Email))
                 return Conflict("A felhasználónév vagy az e-mail már foglalt.");
 
@@ -32,30 +39,36 @@ namespace API.Controllers
             };
 
             _db.Users.Add(user);
-            await _db.SaveChangesAsync();
 
-            return Ok(new
+            try
             {
-                message = "Sikeres regisztráció.",
-                user = new UserDto { Id = user.Id, Username = user.Username }
-            });
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                // Két egyidejű regisztrációnál az egyedi index dobja el a másodikat
+                return Conflict("A felhasználónév vagy az e-mail már foglalt.");
+            }
+
+            return Ok(CreateResponse(user));
         }
 
-
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Login(LoginDto dto)
         {
             var user = await _db.Users.FirstOrDefaultAsync(u =>
-    u.Username == dto.UsernameOrEmail || u.Email == dto.UsernameOrEmail);
+                u.Username == dto.UsernameOrEmail || u.Email == dto.UsernameOrEmail);
 
             if (user is null || !BC.Verify(dto.Password, user.PasswordHash))
                 return Unauthorized("Hibás felhasználónév vagy jelszó.");
 
-            return Ok(new
-            {
-                message = "Sikeres bejelentkezés.",
-                user = new UserDto { Id = user.Id, Username = user.Username }
-            });
+            return Ok(CreateResponse(user));
         }
+
+        private AuthResponseDto CreateResponse(User user) => new()
+        {
+            Token = _tokens.CreateToken(user),
+            User = new UserDto { Id = user.Id, Username = user.Username }
+        };
     }
 }

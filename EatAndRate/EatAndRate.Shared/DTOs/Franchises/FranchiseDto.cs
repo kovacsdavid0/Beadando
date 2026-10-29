@@ -11,6 +11,6 @@ namespace EatAndRate.Shared.DTOs.Franchises
         public string Name { get; set; } = string.Empty;
         public int RestaurantCount { get; set; }
         public int ReviewCount { get; set; }
-        public double AvgOverall { get; set; }
+        public double? AvgOverall { get; set; }
     }
 }
