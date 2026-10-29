@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API\API.csproj" />
+    <ProjectReference Include="..\EatAndRate.Shared\EatAndRate.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,3 +40,4 @@
   </ItemGroup>
 
 </Project>
+
