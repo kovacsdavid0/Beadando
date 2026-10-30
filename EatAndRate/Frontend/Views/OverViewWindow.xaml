@@ -57,8 +57,10 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Margin="12,0,0,32"
-                           FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"><Run Text="Eat"/><Run Language="hu-hu" Text="&amp;"/><Run Text="Rate"/></TextBlock>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,16">
+                    <Image Source="/Images/enr_logo.png" Height="45" Width="45" Stretch="Uniform" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Foreground="{DynamicResource PrimaryText}" Margin="8,0,0,0">Eat&amp;Rate</TextBlock>
+                </StackPanel>
 
                 <StackPanel Grid.Row="1">
                     <RadioButton Content="Áttekintés" Style="{StaticResource SidebarItemStyle}" IsChecked="True"/>

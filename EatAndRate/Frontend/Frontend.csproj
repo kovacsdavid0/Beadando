@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="Fonts\Inter_18pt-Regular.ttf" />
+    <None Remove="Images\enr_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
     <Resource Include="Fonts\Inter_18pt-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\enr_logo.png" />
     <Resource Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

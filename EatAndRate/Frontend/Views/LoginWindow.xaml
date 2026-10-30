@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Frontend.Views"
         mc:Ignorable="d"
         Title="Bejelentkezés"
-        Height="450" Width="800"
+        Height="600" Width="500"
         MinHeight="450" MinWidth="400"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Background}">
@@ -22,6 +22,7 @@
                 VerticalAlignment="Center">
 
             <StackPanel Width="250">
+                <Image Source="/Images/enr_logo.png" Height="45" Width="45" Stretch="Uniform" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,16"/>
                 <TextBlock Text="Üdv újra!"
                            FontSize="25"
                            FontFamily="#Inter"
