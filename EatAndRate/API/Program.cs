@@ -44,6 +44,7 @@ namespace API
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.Migrate();
+                DbSeeder.SeedAsync(db).GetAwaiter().GetResult();
             }
 
             if (app.Environment.IsDevelopment())
