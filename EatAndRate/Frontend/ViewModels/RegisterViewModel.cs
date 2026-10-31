@@ -38,7 +38,7 @@ namespace Frontend.ViewModels
             set { if (SetProperty(ref _email, value)) ErrorMessage = string.Empty; }
         }
 
-        // A PasswordBox nem bindolható, ezt a View állítja be a PasswordChanged eseményben
+
         public string Password
         {
             get => _password;
@@ -76,7 +76,7 @@ namespace Frontend.ViewModels
                 Password = Password
             };
 
-            // Ugyanazok a szabályok, mint az API-n (a Shared DTO attribútumai)
+
             var results = new List<ValidationResult>();
             if (!Validator.TryValidateObject(dto, new ValidationContext(dto), results, true))
             {

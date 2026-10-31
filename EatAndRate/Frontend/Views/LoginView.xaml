@@ -1,14 +1,12 @@
-﻿<Window x:Class="Frontend.Views.LoginWindow"
+﻿<UserControl x:Class="Frontend.Views.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Frontend.Views"
+        xmlns:vm="clr-namespace:Frontend.ViewModels"
         mc:Ignorable="d"
-        Title="Bejelentkezés"
-        Height="600" Width="500"
-        MinHeight="450" MinWidth="400"
-        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
         Background="{DynamicResource Background}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -41,7 +39,7 @@
                 <TextBox Height="35"
                          Padding="4,0"
                          VerticalContentAlignment="Center"
-                         TextChanged="TextBox_TextChanged"
+                         Text="{Binding UsernameOrEmail, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,0,12"/>
 
                 <TextBlock Text="Jelszó"
@@ -50,20 +48,30 @@
                 <PasswordBox Height="35"
                              Padding="4,0"
                              VerticalContentAlignment="Center"
-                             Margin="0,0,0,20"/>
+                             Margin="0,0,0,20"
+                             PasswordChanged="PasswordBox_PasswordChanged"/>
+                
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}"
+                           Foreground="{DynamicResource Error}"
+                           FontSize="13"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"/>
+
 
                 <Button Content="Bejelentkezés"
                         FontSize="14"
                         Height="35"
-                        Click="Button_Click"
+                        Command="{Binding LoginCommand}"
                         Style="{StaticResource PrimaryButtonStyle}"
+                        IsDefault="True"
                         Margin="0,0,0,12"/>
 
                 <TextBlock HorizontalAlignment="Center" FontSize="13">
                     <Run Text="Nincs még fiókod?"/>
-                    <Hyperlink>Regisztrálj!</Hyperlink>
+                    <Hyperlink Command="{Binding GoToRegisterCommand}">Regisztrálj!</Hyperlink>
                 </TextBlock>
             </StackPanel>
         </Border>
     </ScrollViewer>
-</Window>
+</UserControl>
