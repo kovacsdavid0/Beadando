@@ -14,7 +14,7 @@ namespace Frontend.Services
     public static class ApiClient
     {
         //"http" profil: 5029, docker-compose: 8080
-        private const string BaseUrl = "http://localhost:5029/";
+        private const string BaseUrl = "http://localhost:8080/";
 
         private static readonly HttpClient _http = new()
         {

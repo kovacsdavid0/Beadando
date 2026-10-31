@@ -15,7 +15,8 @@ namespace Frontend.ViewModels
 
         public RegisterViewModel()
         {
-            RegisterCommand = new RelayCommand(async _ => await RegisterAsync(), _ => !IsBusy);
+            RegisterCommand = new AsyncRelayCommand(_ => RegisterAsync(), _ => !IsBusy,
+                ex => ErrorMessage = $"Váratlan hiba történt: {ex.Message}");
             GoToLoginCommand = new RelayCommand(_ => LoginRequested?.Invoke());
         }
 
