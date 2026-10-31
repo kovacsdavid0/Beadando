@@ -62,31 +62,23 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
-                    <RadioButton Content="Áttekintés" Style="{StaticResource SidebarItemStyle}" IsChecked="True"/>
-                    <RadioButton Content="Éttermek" Style="{StaticResource SidebarItemStyle}"/>
-                    <RadioButton Content="Értékeléseim" Style="{StaticResource SidebarItemStyle}"/>
+                    <RadioButton Content="Áttekintés" Style="{StaticResource SidebarItemStyle}" IsChecked="True"
+                                 Command="{Binding ShowDashboardCommand}"/>
+                    <RadioButton Content="Éttermek" Style="{StaticResource SidebarItemStyle}"
+                                 Command="{Binding ShowRestaurantsCommand}"/>
+                    <RadioButton Content="Értékeléseim" Style="{StaticResource SidebarItemStyle}"
+                                 Command="{Binding ShowMyReviewsCommand}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
-                    <RadioButton Content="Beállítások" Style="{StaticResource SidebarItemStyle}"/>
+                    <RadioButton Content="Beállítások" Style="{StaticResource SidebarItemStyle}"
+                                 Command="{Binding ShowSettingsCommand}"/>
                     <Button Content="Kijelentkezés" Style="{StaticResource DangerButtonStyle}"
                             Command="{Binding LogoutCommand}" Height="36"/>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <Grid Grid.Column="1" Margin="24">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Áttekintés" FontSize="24" FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
-
-            <Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}"
-                    BorderThickness="1" CornerRadius="8">
-            </Border>
-        </Grid>
+        <ContentControl Grid.Column="1" Margin="24" Content="{Binding CurrentPage}"/>
     </Grid>
 </UserControl>

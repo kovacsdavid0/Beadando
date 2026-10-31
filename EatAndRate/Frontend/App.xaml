@@ -22,6 +22,19 @@
             <DataTemplate DataType="{x:Type vm:OverviewViewModel}">
                 <views:OverviewView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+                <views:DashboardView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:RestaurantsViewModel}">
+                <views:RestaurantsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:MyReviewsViewModel}">
+                <views:MyReviewsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                <views:SettingsView/>
+            </DataTemplate>
+
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
 
             <FontFamily x:Key="InterFont">/Fonts/#Inter</FontFamily>
