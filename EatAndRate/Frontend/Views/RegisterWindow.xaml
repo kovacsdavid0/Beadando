@@ -4,12 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Frontend.Views"
+        xmlns:vm="clr-namespace:Frontend.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:RegisterViewModel}"
         Title="Regisztráció"
         Height="600" Width="500"
         MinHeight="450" MinWidth="400"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Background}">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </Window.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Border BorderBrush="{DynamicResource Border}"
@@ -33,19 +39,19 @@
                 <TextBlock Text="Felhasználónév"
                            FontSize="13"
                            Margin="0,0,0,4"/>
-                <TextBox Height="35"
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                         Height="35"
                          Padding="4,0"
                          VerticalContentAlignment="Center"
-                         TextChanged="TextBox_TextChanged"
                          Margin="0,0,0,12"/>
 
                 <TextBlock Text="Email"
                             FontSize="13"
                             Margin="0,0,0,4"/>
-                <TextBox Height="35"
+                <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                            Height="35"
                             Padding="4,0"
                             VerticalContentAlignment="Center"
-                            TextChanged="TextBox_TextChanged"
                             Margin="0,0,0,12"/>
 
                 <TextBlock Text="Jelszó"
@@ -54,18 +60,27 @@
                 <PasswordBox Height="35"
                              Padding="4,0"
                              VerticalContentAlignment="Center"
-                             Margin="0,0,0,20"/>
+                             PasswordChanged="PasswordBox_PasswordChanged"
+                             Margin="0,0,0,12"/>
+
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}"
+                           Foreground="{DynamicResource Error}"
+                           FontSize="13"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,12"/>
 
                 <Button Content="Regisztráció"
                         FontSize="14"
                         Height="35"
-                        Click="Button_Click"
+                        Command="{Binding RegisterCommand}"
                         Style="{StaticResource PrimaryButtonStyle}"
+                        IsDefault="True"
                         Margin="0,0,0,12"/>
 
                 <TextBlock HorizontalAlignment="Center" FontSize="13">
                     <Run Text="Van már fiókod?"/>
-                    <Hyperlink>Jelentkezz be!</Hyperlink>
+                    <Hyperlink Command="{Binding GoToLoginCommand}">Jelentkezz be!</Hyperlink>
                 </TextBlock>
             </StackPanel>
         </Border>
