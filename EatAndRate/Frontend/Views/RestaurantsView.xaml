@@ -7,16 +7,60 @@
         d:DesignHeight="450" d:DesignWidth="600">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Grid.Row="0" Text="Éttermek" FontSize="24" FontWeight="SemiBold"
+        <!-- Franchise lista -->
+        <DockPanel Visibility="{Binding IsFranchiseListVisible, Converter={StaticResource BoolToVisibility}}">
+            <TextBlock DockPanel.Dock="Top" Text="Éttermek" FontSize="24" FontWeight="SemiBold"
                    Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
+            <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Franchises}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Height="44" Margin="0,0,0,8"
+                                Command="{Binding DataContext.OpenFranchiseCommand,
+                                          RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}">
+                                <TextBlock>
+                                <Run Text="{Binding Name, Mode=OneWay}"/>
+                                <Run Text=" – "/>
+                                <Run Text="{Binding RestaurantCount, Mode=OneWay}"/>
+                                <Run Text=" étterem"/>
+                                </TextBlock>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
 
-        <Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}"
-                BorderThickness="1" CornerRadius="8">
-        </Border>
+        <!-- A kiválasztott franchise éttermei -->
+        <DockPanel Visibility="{Binding IsRestaurantListVisible, Converter={StaticResource BoolToVisibility}}">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,16" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding SelectedFranchise.Name}" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"/>
+                <Button Content="Vissza" Command="{Binding BackCommand}" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,16,0" HorizontalAlignment="Right"/>
+            </StackPanel>
+            <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMessage}"
+                   Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Restaurants}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}"
+                                BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource PrimaryText}"/>
+                                    <TextBlock Foreground="{DynamicResource SecondaryText}">
+                                    <Run Text="{Binding City, Mode=OneWay}"/>
+                                    <Run Text="{Binding Address, Mode=OneWay}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </UserControl>
