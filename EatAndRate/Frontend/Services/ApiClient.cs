@@ -3,6 +3,9 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using EatAndRate.Shared.DTOs.Auth;
+using EatAndRate.Shared.DTOs.Reviews;
+using EatAndRate.Shared.DTOs.Franchises;
+using EatAndRate.Shared.DTOs.Restaurants;
 
 namespace Frontend.Services
 {
@@ -34,12 +37,27 @@ namespace Frontend.Services
         public static Task<AuthResponseDto> LoginAsync(LoginDto dto) =>
             PostAsync<AuthResponseDto>("api/auth/login", dto);
 
-        private static async Task<T> PostAsync<T>(string url, object body)
+        public static Task<List<ReviewDto>> GetMyReviewsAsync() =>
+            GetAsync<List<ReviewDto>>("api/reviews/mine");
+
+        public static Task<List<FranchiseDto>> GetFranchisesAsync() =>
+            GetAsync<List<FranchiseDto>>("api/franchises");
+
+        public static Task<List<RestaurantSummaryDto>> GetRestaurantsByFranchiseAsync(int franchiseId) =>
+            GetAsync<List<RestaurantSummaryDto>>($"api/restaurants?franchiseId={franchiseId}");
+
+        private static Task<T> GetAsync<T>(string url) =>
+            SendAsync<T>(() => _http.GetAsync(url));
+
+        private static Task<T> PostAsync<T>(string url, object body) =>
+            SendAsync<T>(() => _http.PostAsJsonAsync(url, body));
+
+        private static async Task<T> SendAsync<T>(Func<Task<HttpResponseMessage>> send)
         {
             HttpResponseMessage response;
             try
             {
-                response = await _http.PostAsJsonAsync(url, body);
+                response = await send();
             }
             catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
             {

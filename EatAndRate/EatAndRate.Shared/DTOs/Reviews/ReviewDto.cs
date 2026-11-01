@@ -19,5 +19,8 @@ namespace EatAndRate.Shared.DTOs.Reviews
 
         public int RestaurantId { get; set; }
         public string RestaurantName { get; set; } = string.Empty;
+        public string? FranchiseName { get; set; }
+        public string? City { get; set; }
+        public double Overall => (FoodRating + ServiceRating + AtmosphereRating) / 3.0;
     }
 }

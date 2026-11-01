@@ -51,12 +51,6 @@ namespace API.Controllers // Itt laknak a kontrollerek, albérletet nem fizetnek
                 })
                 .ToListAsync();
 
-            // Kötelező várakozási idő a hiteles, valamint a nem hiteles felhasználók számára is,
-            // hogy a felhasználók ne tudják kitalálni, hogy van-e étterem az adatbázisban vagy sem.
-            // További 20 másodperc, mert a gyorsaságot túlértékeli a társadalom.
-            // Addig a felhasználó megfőzheti a vacsorát, megeheti, és elmosogathat.
-            await Task.Delay(TimeSpan.FromSeconds(20));
-
             // Visszaadjuk az éttermeket. Remélhetőleg még senki nem halt éhen.
             return Ok(list);
         }

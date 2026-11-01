@@ -147,7 +147,9 @@ namespace API.Controllers
             UserId = r.UserId,
             Username = r.User.Username,
             RestaurantId = r.RestaurantId,
-            RestaurantName = r.Restaurant.Name
+            RestaurantName = r.Restaurant.Name,
+            FranchiseName = r.Restaurant.Franchise != null ? r.Restaurant.Franchise.Name : null,
+            City = r.Restaurant.City
         };
     }
 }
