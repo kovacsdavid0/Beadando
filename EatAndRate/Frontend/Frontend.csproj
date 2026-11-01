@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Page Remove="Styles\Buttons.xaml" />
+    <Page Remove="Styles\Cards.xaml" />
     <Page Remove="Styles\LightTheme.xaml" />
   </ItemGroup>
 
@@ -34,6 +35,9 @@
     <Resource Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Styles\Cards.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="Styles\LightTheme.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
