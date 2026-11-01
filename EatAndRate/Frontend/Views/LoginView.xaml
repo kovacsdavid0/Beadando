@@ -6,12 +6,30 @@
         xmlns:local="clr-namespace:Frontend.Views"
         xmlns:vm="clr-namespace:Frontend.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
-        Background="{DynamicResource Background}">
+        d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}">
+    <UserControl.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#6366F1" Offset="0"/>
+            <GradientStop Color="#0EA5E9" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24"
+              MaxWidth="400"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+        <Border Background="{DynamicResource Surface}"
+                    CornerRadius="16">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="4"
+                                      Direction="270"
+                                      Color="Black"
+                                      Opacity="0.3"/>
+            </Border.Effect>
+        </Border>
         <Border BorderBrush="{DynamicResource Border}"
-                BorderThickness="1"
                 CornerRadius="8"
                 Padding="32,28"
                 Margin="16"
@@ -50,13 +68,17 @@
                              VerticalContentAlignment="Center"
                              Margin="0,0,0,20"
                              PasswordChanged="PasswordBox_PasswordChanged"/>
-                
-                <TextBlock Text="{Binding ErrorMessage}"
-                           Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}"
-                           Foreground="{DynamicResource Error}"
-                           FontSize="13"
-                           TextWrapping="Wrap"
-                           Margin="0,0,0,12"/>
+
+                <Border Background="#1AE53935" BorderBrush="{DynamicResource Error}"
+                        BorderThickness="1" CornerRadius="8" Padding="10,8" Margin="0,0,0,16"
+                        Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="&#xE783;" FontFamily="Segoe MDL2 Assets"
+                            Foreground="{DynamicResource Error}" Margin="0,2,8,0"/>
+                        <TextBlock Text="{Binding ErrorMessage}" TextWrapping="Wrap"
+                            Foreground="{DynamicResource Error}" FontSize="13" MaxWidth="260"/>
+                    </StackPanel>
+                </Border>
 
 
                 <Button Content="Bejelentkezés"
@@ -73,5 +95,7 @@
                 </TextBlock>
             </StackPanel>
         </Border>
+        </Grid>
     </ScrollViewer>
+        
 </UserControl>
