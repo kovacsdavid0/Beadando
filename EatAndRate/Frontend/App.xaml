@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Frontend"
              xmlns:vm="clr-namespace:Frontend.ViewModels"
              xmlns:views="clr-namespace:Frontend.Views"
+             xmlns:converters="clr-namespace:Frontend.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -12,6 +13,7 @@
                 <ResourceDictionary Source="Styles/LightTheme.xaml"/>
                 <ResourceDictionary Source="Styles/Buttons.xaml"/>
                 <ResourceDictionary Source="Styles/TextBoxes.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxes.xaml"/>
                 <ResourceDictionary Source="Styles/Cards.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type vm:LoginViewModel}">
@@ -37,6 +39,7 @@
             </DataTemplate>
 
             <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+            <converters:FranchiseLogoConverter x:Key="FranchiseLogo"/>
 
             <FontFamily x:Key="InterFont">/Fonts/#Inter</FontFamily>
 

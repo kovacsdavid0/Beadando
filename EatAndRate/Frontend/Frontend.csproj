@@ -11,11 +11,25 @@
   <ItemGroup>
     <None Remove="Fonts\Inter_18pt-Regular.ttf" />
     <None Remove="Images\enr_logo.png" />
+    <None Remove="Images\RestaurantLogos\bambamarha_logo.png" />
+    <None Remove="Images\RestaurantLogos\bellozzo_logo.png" />
+    <None Remove="Images\RestaurantLogos\burgerhouse_logo.png" />
+    <None Remove="Images\RestaurantLogos\burgerking_logo.png" />
+    <None Remove="Images\RestaurantLogos\kfc_logo.png" />
+    <None Remove="Images\RestaurantLogos\mcdonalds_logo.png" />
+    <None Remove="Images\RestaurantLogos\pizzahut_logo.png" />
+    <None Remove="Images\RestaurantLogos\pizzaking_logo.png" />
+    <None Remove="Images\RestaurantLogos\popeyes_logo.png" />
+    <None Remove="Images\RestaurantLogos\simonsburger_logo.png" />
+    <None Remove="Images\RestaurantLogos\starbucks_logo.png" />
+    <None Remove="Images\RestaurantLogos\subway_logo.png" />
+    <None Remove="Images\RestaurantLogos\zing_logo.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Remove="Styles\Buttons.xaml" />
     <Page Remove="Styles\Cards.xaml" />
+    <Page Remove="Styles\ComboBoxes.xaml" />
     <Page Remove="Styles\LightTheme.xaml" />
   </ItemGroup>
 
@@ -32,11 +46,28 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\enr_logo.png" />
+    <Resource Include="Images\RestaurantLogos\bambamarha_logo.png" />
+    <Resource Include="Images\RestaurantLogos\bellozzo_logo.png" />
+    <Resource Include="Images\RestaurantLogos\burgerhouse_logo.png" />
+    <Resource Include="Images\RestaurantLogos\burgerking_logo.png" />
+    <Resource Include="Images\RestaurantLogos\jóasszony_logo.png" />
+    <Resource Include="Images\RestaurantLogos\kfc_logo.png" />
+    <Resource Include="Images\RestaurantLogos\mcdonalds_logo.png" />
+    <Resource Include="Images\RestaurantLogos\pizzahut_logo.png" />
+    <Resource Include="Images\RestaurantLogos\pizzaking_logo.png" />
+    <Resource Include="Images\RestaurantLogos\popeyes_logo.png" />
+    <Resource Include="Images\RestaurantLogos\simonsburger_logo.png" />
+    <Resource Include="Images\RestaurantLogos\starbucks_logo.png" />
+    <Resource Include="Images\RestaurantLogos\subway_logo.png" />
+    <Resource Include="Images\RestaurantLogos\zing_logo.png" />
     <Resource Include="Styles\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Styles\Cards.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Styles\ComboBoxes.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="Styles\LightTheme.xaml">

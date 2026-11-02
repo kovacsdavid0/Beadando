@@ -62,22 +62,20 @@
                                 CommandParameter="{Binding}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel>
-                                    <TextBlock Text="{Binding RestaurantName}" FontWeight="SemiBold"
-                                               Foreground="{DynamicResource PrimaryText}"/>
-                                    <TextBlock Text="{Binding FranchiseName, TargetNullValue=Nincs franchise}"
-                                               Foreground="{DynamicResource SecondaryText}"/>
-                                    <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}"
-                                               FontSize="12" Foreground="{DynamicResource MutedText}"/>
+                                <Image Grid.Column="0" Width="40" Height="40" Margin="0,0,12,0" Stretch="Uniform" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding FranchiseName, Converter={StaticResource FranchiseLogo}}"/>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding RestaurantName}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"/>
+                                    <TextBlock Text="{Binding FranchiseName, TargetNullValue=Nincs franchise}" Foreground="{DynamicResource SecondaryText}"/>
+                                    <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}" FontSize="12" Foreground="{DynamicResource MutedText}"/>
                                 </StackPanel>
 
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold"
-                                           Foreground="{DynamicResource PrimaryText}"
-                                           Text="{Binding Overall, StringFormat={}{0:0.0} / 5}"/>
+                                <TextBlock Grid.Column="2" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Margin="12,0,0,0" Foreground="{DynamicResource PrimaryText}" Text="{Binding Overall, StringFormat={}{0:0.0} / 5}"/>
                             </Grid>
                         </Button>
                     </DataTemplate>

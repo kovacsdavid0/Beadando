@@ -4,6 +4,7 @@
     <!-- Alap: ebből származik a többi -->
     <Style x:Key="BaseButtonStyle" TargetType="Button">
         <Setter Property="Padding" Value="16,6"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
@@ -17,8 +18,7 @@
                             Background="{TemplateBinding Background}"
                             CornerRadius="6"
                             Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">

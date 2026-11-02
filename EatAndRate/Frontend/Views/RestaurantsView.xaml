@@ -9,24 +9,45 @@
     <Grid>
         <!-- Franchise lista -->
         <DockPanel Visibility="{Binding IsFranchiseListVisible, Converter={StaticResource BoolToVisibility}}">
-            <TextBlock DockPanel.Dock="Top" Text="Éttermek" FontSize="24" FontWeight="SemiBold"
-                   Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
+            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+                <Grid DockPanel.Dock="Right" Width="220" Margin="16,0,0,0" VerticalAlignment="Center">
+                    <TextBox Padding="3,0" Text="{Binding FranchiseSearchText, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Keresés"/>
+                    <TextBlock Text="Keresés..." Margin="9,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" Foreground="{DynamicResource MutedText}" Visibility="{Binding IsFranchiseSearchPlaceholderVisible, Converter={StaticResource BoolToVisibility}}"/>
+                </Grid>
+                <TextBlock Text="Éttermek" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}" VerticalAlignment="Center"/>
+            </DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMessage}"
                    Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Franchises}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource SecondaryButtonStyle}" Height="44" Margin="0,0,0,8"
-                                Command="{Binding DataContext.OpenFranchiseCommand,
-                                          RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                CommandParameter="{Binding}">
-                                <TextBlock>
-                                <Run Text="{Binding Name, Mode=OneWay}"/>
-                                <Run Text=" – "/>
-                                <Run Text="{Binding RestaurantCount, Mode=OneWay}"/>
-                                <Run Text=" étterem"/>
-                                </TextBlock>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,8" Padding="16,8"
+                                    HorizontalContentAlignment="Stretch"
+                                    Command="{Binding DataContext.OpenFranchiseCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Column="0" Width="40" Height="40"
+                                           Stretch="Uniform" VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding Name, Converter={StaticResource FranchiseLogo}}"/>
+
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"/>
+                                        <TextBlock FontSize="12" FontWeight="Normal" Margin="0,2,0,0" HorizontalAlignment="Center">
+                                            <Run Text="{Binding ReviewCount, Mode=OneWay}"/>
+                                            <Run Text="értékelés"/>
+                                            <Run Text="·"/>
+                                            <Run Text="{Binding RestaurantCount, Mode=OneWay}"/>
+                                            <Run Text="étterem"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
                             </Button>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -36,10 +57,21 @@
 
         <!-- A kiválasztott franchise éttermei -->
         <DockPanel Visibility="{Binding IsRestaurantListVisible, Converter={StaticResource BoolToVisibility}}">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,16" HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding SelectedFranchise.Name}" FontSize="24" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"/>
-                <Button Content="Vissza" Command="{Binding BackCommand}" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,16,0" HorizontalAlignment="Right"/>
-            </StackPanel>
+            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,16">
+                <Button DockPanel.Dock="Left" Command="{Binding BackCommand}" Style="{StaticResource SecondaryButtonStyle}"
+                        Margin="0,0,16,0" ToolTip="Vissza" AutomationProperties.Name="Vissza">
+                    <TextBlock Text="&#xE72B;" FontFamily="Segoe MDL2 Assets"/>
+                </Button>
+
+                <Grid DockPanel.Dock="Right" Width="220" Margin="16,0,0,0" VerticalAlignment="Center">
+                    <TextBox Padding="3,0" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Keresés"/>
+                    <TextBlock Text="Keresés..." Margin="9,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False" Foreground="{DynamicResource MutedText}" Visibility="{Binding IsSearchPlaceholderVisible, Converter={StaticResource BoolToVisibility}}"/>
+                </Grid>
+
+                <TextBlock Text="{Binding SelectedFranchise.Name}" FontSize="24" FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryText}" VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"/>
+            </DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMessage}"
                    Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -47,15 +79,37 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}"
-                                BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
-                                           Foreground="{DynamicResource PrimaryText}"/>
-                                    <TextBlock Foreground="{DynamicResource SecondaryText}">
-                                    <Run Text="{Binding City, Mode=OneWay}"/>
-                                    <Run Text="{Binding Address, Mode=OneWay}"/>
-                                    </TextBlock>
-                                </StackPanel>
+                                    BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Column="0" Width="40" Height="40" Margin="0,0,12,0"
+                                           Stretch="Uniform" VerticalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"
+                                           Source="{Binding DataContext.SelectedFranchise.Name,
+                                                    RelativeSource={RelativeSource AncestorType=UserControl},
+                                                    Converter={StaticResource FranchiseLogo}}"/>
+
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource PrimaryText}"/>
+                                        <TextBlock Foreground="{DynamicResource SecondaryText}">
+                                            <Run Text="{Binding City, Mode=OneWay}"/>
+                                            <Run Text="{Binding Address, Mode=OneWay}"/>
+                                        </TextBlock>
+                                        <TextBlock FontSize="12" Margin="0,2,0,0" Foreground="{DynamicResource SecondaryText}">
+                                            <Run Text="{Binding AvgOverall, Mode=OneWay, StringFormat='★ {0:0.0} / 5', TargetNullValue='★ – / 5'}"/>
+                                            <Run Text="·"/>
+                                            <Run Text="{Binding ReviewCount, Mode=OneWay}"/>
+                                            <Run Text="értékelés"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <Button Grid.Column="2" Content="Értékeld ★" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource SecondaryButtonStyle}"/>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
