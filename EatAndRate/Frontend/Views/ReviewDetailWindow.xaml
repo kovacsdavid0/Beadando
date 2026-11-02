@@ -1,0 +1,75 @@
+﻿<Window x:Class="Frontend.Views.ReviewDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding RestaurantName}"
+        Width="460" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource Background}">
+
+    <StackPanel Margin="24">
+        <TextBlock Text="{Binding RestaurantName}" FontSize="24" FontWeight="SemiBold"
+                   Foreground="{DynamicResource PrimaryText}" TextWrapping="Wrap"/>
+        <TextBlock Foreground="{DynamicResource SecondaryText}" Margin="0,4,0,0">
+            <Run Text="{Binding FranchiseName, Mode=OneWay, TargetNullValue=Nincs franchise}"/>
+            <Run Text="•"/>
+            <Run Text="{Binding City, Mode=OneWay}"/>
+        </TextBlock>
+        <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}"
+                   FontSize="12" Foreground="{DynamicResource MutedText}" Margin="0,4,0,16"/>
+
+        <TextBlock Text="{Binding Overall, StringFormat=Összesített pontszám: {0:0.0} / 5}"
+                   FontSize="18" FontWeight="SemiBold"
+                   Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
+
+        <UniformGrid Columns="3" Margin="0,0,0,16">
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="Étel" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding FoodRating}"
+                          IsEnabled="{Binding IsEditing}"/>
+            </StackPanel>
+            <StackPanel Margin="4,0">
+                <TextBlock Text="Kiszolgálás" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding ServiceRating}"
+                          IsEnabled="{Binding IsEditing}"/>
+            </StackPanel>
+            <StackPanel Margin="8,0,0,0">
+                <TextBlock Text="Hangulat" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding AtmosphereRating}"
+                          IsEnabled="{Binding IsEditing}"/>
+            </StackPanel>
+        </UniformGrid>
+
+        <TextBlock Text="Megjegyzés" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+        <TextBox Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding IsNotEditing}"
+                 Height="120" Padding="8" MaxLength="1000"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 Margin="0,0,0,12"/>
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}"
+                   Foreground="{DynamicResource Error}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+        <!-- Megtekintés -->
+        <DockPanel Visibility="{Binding IsNotEditing, Converter={StaticResource BoolToVisibility}}">
+            <Button DockPanel.Dock="Left" Content="Törlés" Height="35" Style="{StaticResource DangerButtonStyle}"
+                    Command="{Binding DeleteCommand}"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Bezárás" Height="35" Style="{StaticResource SecondaryButtonStyle}"
+                        IsCancel="True" Margin="0,0,8,0"/>
+                <Button Content="Módosítás" Height="35" Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding EditCommand}"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Szerkesztés -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                    Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibility}}">
+            <Button Content="Mégse" Height="35" Style="{StaticResource SecondaryButtonStyle}"
+                    Command="{Binding CancelCommand}" Margin="0,0,8,0"/>
+            <Button Content="Mentés" Height="35" Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding SaveCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

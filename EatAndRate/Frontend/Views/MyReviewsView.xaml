@@ -6,17 +6,83 @@
         mc:Ignorable="d"
         d:DesignHeight="450" d:DesignWidth="600">
 
+    <UserControl.Resources>
+        <Style x:Key="ReviewCardStyle" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{DynamicResource Surface}"
+                                BorderBrush="{DynamicResource Border}" BorderThickness="1"
+                                CornerRadius="8" Padding="12">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource SurfaceAlt}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Értékeléseim" FontSize="24" FontWeight="SemiBold"
-                   Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
+        <DockPanel Grid.Row="0" Margin="0,0,0,16">
+            <ComboBox DockPanel.Dock="Right" Width="200" VerticalContentAlignment="Center"
+                      ItemsSource="{Binding SortOptions}"
+                      DisplayMemberPath="Label"
+                      SelectedItem="{Binding SelectedSort}"/>
+            <TextBlock Text="Értékeléseim" FontSize="24" FontWeight="SemiBold"
+                       Foreground="{DynamicResource PrimaryText}"/>
+        </DockPanel>
 
-        <Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Border}"
-                BorderThickness="1" CornerRadius="8">
-        </Border>
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
+            <TextBlock Text="Még nem írtál értékelést." Foreground="{DynamicResource MutedText}"
+                       Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Reviews}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Style="{StaticResource ReviewCardStyle}"
+                                Command="{Binding DataContext.OpenReviewCommand,
+                                          RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                CommandParameter="{Binding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel>
+                                    <TextBlock Text="{Binding RestaurantName}" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource PrimaryText}"/>
+                                    <TextBlock Text="{Binding FranchiseName, TargetNullValue=Nincs franchise}"
+                                               Foreground="{DynamicResource SecondaryText}"/>
+                                    <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}"
+                                               FontSize="12" Foreground="{DynamicResource MutedText}"/>
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource PrimaryText}"
+                                           Text="{Binding Overall, StringFormat={}{0:0.0} / 5}"/>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -40,6 +40,12 @@ namespace Frontend.Services
         public static Task<List<ReviewDto>> GetMyReviewsAsync() =>
             GetAsync<List<ReviewDto>>("api/reviews/mine");
 
+        public static Task UpdateReviewAsync(int id, CreateReviewDto dto) =>
+            SendWithoutResultAsync(() => _http.PutAsJsonAsync($"api/reviews/{id}", dto));
+
+        public static Task DeleteReviewAsync(int id) =>
+            SendWithoutResultAsync(() => _http.DeleteAsync($"api/reviews/{id}"));
+
         public static Task<List<FranchiseDto>> GetFranchisesAsync() =>
             GetAsync<List<FranchiseDto>>("api/franchises");
 
@@ -70,6 +76,26 @@ namespace Frontend.Services
             return await response.Content.ReadFromJsonAsync<T>()
                 ?? throw new ApiException("Üres válasz érkezett a szervertől.");
         }
+
+
+        private static async Task SendWithoutResultAsync(Func<Task<HttpResponseMessage>> send)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await send();
+            }
+            catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+            {
+                throw new ApiException("Nem sikerült kapcsolódni a szerverhez. Fut az API?");
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApiException(await ReadErrorAsync(response));
+            }
+        }
+
 
         // Az API vagy sima szöveget ad vissza (pl. Conflict("...")),
         // vagy ValidationProblemDetails JSON-t az "errors" mezővel.
