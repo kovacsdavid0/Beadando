@@ -67,7 +67,7 @@ namespace Frontend.ViewModels
 
         public bool IsEmpty => _isLoaded && _allReviews.Count == 0;
 
-        private void ApplySort() => Reviews = SelectedSort.Sort(_reviews).ToList();
+        private void ApplySort() => Reviews = SelectedSort.Sort(_allReviews).ToList();
 
         private async Task LoadAsync()
         {

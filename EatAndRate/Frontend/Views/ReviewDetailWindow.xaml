@@ -4,7 +4,8 @@
         Title="{Binding RestaurantName}"
         Width="460" SizeToContent="Height" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Background="{DynamicResource Background}">
+        Background="{DynamicResource Background}"
+        Foreground="{DynamicResource PrimaryText}">
 
     <StackPanel Margin="24">
         <TextBlock Text="{Binding RestaurantName}" FontSize="24" FontWeight="SemiBold"
