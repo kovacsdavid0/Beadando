@@ -108,7 +108,9 @@
                                             <Run Text="értékelés"/>
                                         </TextBlock>
                                     </StackPanel>
-                                    <Button Grid.Column="2" Content="Értékeld ★" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource SecondaryButtonStyle}"/>
+                                    <Button Grid.Column="2" Content="Értékeld ★" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource SecondaryButtonStyle}" 
+                                            Command="{Binding DataContext.RateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>

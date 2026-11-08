@@ -27,6 +27,8 @@ namespace Frontend.ViewModels
             CollectionViewSource.GetDefaultView(Restaurants).Filter = MatchesSearch;
             CollectionViewSource.GetDefaultView(Franchises).Filter = MatchesFranchiseSearch;
             _ = LoadFranchisesAsync();
+
+            RateCommand = new AsyncRelayCommand(p => RateAsync((RestaurantSummaryDto)p!));
         }
 
         public ObservableCollection<FranchiseDto> Franchises { get; } = new();
@@ -34,6 +36,8 @@ namespace Frontend.ViewModels
 
         public ICommand OpenFranchiseCommand { get; }
         public ICommand BackCommand { get; }
+
+        public ICommand RateCommand { get; }
 
         public bool IsFranchiseListVisible => SelectedFranchise is null;
         public bool IsRestaurantListVisible => SelectedFranchise is not null;
@@ -130,6 +134,15 @@ namespace Frontend.ViewModels
             {
                 ErrorMessage = ex.Message;
             }
+        }
+        private async Task RateAsync(RestaurantSummaryDto restaurant)
+        {
+            var vm = new CreateReviewViewModel(restaurant);
+            var window = new Views.CreateReviewWindow(vm) { Owner = System.Windows.Application.Current.MainWindow };
+            window.ShowDialog();
+
+            if (vm.IsSaved && SelectedFranchise is not null)
+                await OpenFranchiseAsync(SelectedFranchise);
         }
     }
 }

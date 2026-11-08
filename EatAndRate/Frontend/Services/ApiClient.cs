@@ -40,6 +40,9 @@ namespace Frontend.Services
         public static Task<List<ReviewDto>> GetMyReviewsAsync() =>
             GetAsync<List<ReviewDto>>("api/reviews/mine");
 
+        public static Task<ReviewDto> CreateReviewAsync(int restaurantId, CreateReviewDto dto) =>
+            PostAsync<ReviewDto>($"api/restaurants/{restaurantId}/reviews", dto);
+
         public static Task UpdateReviewAsync(int id, CreateReviewDto dto) =>
             SendWithoutResultAsync(() => _http.PutAsJsonAsync($"api/reviews/{id}", dto));
 

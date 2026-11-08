@@ -43,6 +43,10 @@
     <SolidColorBrush x:Key="DisabledBackground" Color="#E9ECEF"/>
     <SolidColorBrush x:Key="DisabledText"       Color="#ADB5BD"/>
 
+    <!-- Scrollbar -->
+    <SolidColorBrush x:Key="ScrollThumb"       Color="#CED4DA"/>
+    <SolidColorBrush x:Key="ScrollThumbHover"  Color="#ADB5BD"/>
+
     <!-- Státuszszínek -->
     <SolidColorBrush x:Key="Success" Color="#198754"/>
     <SolidColorBrush x:Key="Warning" Color="#FFC107"/>

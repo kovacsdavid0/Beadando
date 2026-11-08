@@ -1,0 +1,52 @@
+﻿<Window x:Class="Frontend.Views.CreateReviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding RestaurantName}"
+        Width="460" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource Background}"
+        Foreground="{DynamicResource PrimaryText}">
+
+    <StackPanel Margin="24">
+        <TextBlock Text="{Binding RestaurantName}" FontSize="24" FontWeight="SemiBold"
+                   Foreground="{DynamicResource PrimaryText}" TextWrapping="Wrap"/>
+
+
+        <TextBlock Text="{Binding Overall, StringFormat=Összesített pontszám: {0:0.0} / 5}"
+                   FontSize="18" FontWeight="SemiBold"
+                   Foreground="{DynamicResource PrimaryText}" Margin="0,0,0,16"/>
+
+        <UniformGrid Columns="3" Margin="0,0,0,16">
+            <StackPanel Margin="0,0,8,0">
+                <TextBlock Text="Étel" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding FoodRating}"/>
+            </StackPanel>
+            <StackPanel Margin="4,0">
+                <TextBlock Text="Kiszolgálás" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding ServiceRating}"/>
+            </StackPanel>
+            <StackPanel Margin="8,0,0,0">
+                <TextBlock Text="Hangulat" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+                <ComboBox ItemsSource="{Binding RatingOptions}" SelectedItem="{Binding AtmosphereRating}"/>
+            </StackPanel>
+        </UniformGrid>
+
+        <TextBlock Text="Megjegyzés" Foreground="{DynamicResource SecondaryText}" Margin="0,0,0,4"/>
+        <TextBox Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                 Height="120" Padding="8" MaxLength="1000"
+                 TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 Margin="0,0,0,12"/>
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   Visibility="{Binding HasError, Converter={StaticResource BoolToVisibility}}"
+                   Foreground="{DynamicResource Error}" TextWrapping="Wrap" Margin="0,0,0,12"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Mégse" Height="35" Style="{StaticResource SecondaryButtonStyle}"
+                    IsCancel="True" Margin="0,0,8,0"/>
+            <Button Content="Mentés" Height="35" Style="{StaticResource PrimaryButtonStyle}"
+                    Command="{Binding SaveCommand}" IsDefault="True"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

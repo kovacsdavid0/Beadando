@@ -28,10 +28,10 @@
     <SolidColorBrush x:Key="PrimaryButtonText"    Color="White"/>
 
     <!-- Secondary gomb -->
-    <SolidColorBrush x:Key="SecondaryButton"        Color="#E9ECEF"/>
-    <SolidColorBrush x:Key="SecondaryButtonHover"   Color="#DEE2E6"/>
-    <SolidColorBrush x:Key="SecondaryButtonPressed" Color="#CED4DA"/>
-    <SolidColorBrush x:Key="SecondaryButtonText"    Color="#212529"/>
+    <SolidColorBrush x:Key="SecondaryButton"        Color="#1E1A16"/>
+    <SolidColorBrush x:Key="SecondaryButtonHover"   Color="#29241F"/>
+    <SolidColorBrush x:Key="SecondaryButtonPressed" Color="#38312A"/>
+    <SolidColorBrush x:Key="SecondaryButtonText"    Color="#DEDAD6"/>
 
     <!-- Danger gomb (törlés, kilépés) -->
     <SolidColorBrush x:Key="DangerButton"        Color="#DC3545"/>
@@ -42,6 +42,10 @@
     <!-- Letiltott állapot -->
     <SolidColorBrush x:Key="DisabledBackground" Color="#161310"/>
     <SolidColorBrush x:Key="DisabledText"       Color="#524A42"/>
+
+    <!-- Scrollbar -->
+    <SolidColorBrush x:Key="ScrollThumb"       Color="#38312A"/>
+    <SolidColorBrush x:Key="ScrollThumbHover"  Color="#524A42"/>
 
     <!-- Státuszszínek -->
     <SolidColorBrush x:Key="Success" Color="#198754"/>
