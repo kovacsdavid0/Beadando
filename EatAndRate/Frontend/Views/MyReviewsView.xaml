@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Frontend.Views"
         mc:Ignorable="d"
         d:DesignHeight="450" d:DesignWidth="600">
 
@@ -31,56 +32,62 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid Visibility="{Binding IsListVisible, Converter={StaticResource BoolToVisibility}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Margin="0,0,0,16">
-            <ComboBox DockPanel.Dock="Right" Width="200" VerticalContentAlignment="Center"
-                      ItemsSource="{Binding SortOptions}"
-                      DisplayMemberPath="Label"
-                      SelectedItem="{Binding SelectedSort}"/>
-            <TextBlock Text="Értékeléseim" FontSize="24" FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryText}"/>
-        </DockPanel>
+            <DockPanel Grid.Row="0" Margin="0,0,0,16">
+                <ComboBox DockPanel.Dock="Right" Width="200" VerticalContentAlignment="Center"
+                          ItemsSource="{Binding SortOptions}"
+                          DisplayMemberPath="Label"
+                          SelectedItem="{Binding SelectedSort}"/>
+                <TextBlock Text="Értékeléseim" FontSize="24" FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryText}"/>
+            </DockPanel>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
-            <TextBlock Text="Még nem írtál értékelést." Foreground="{DynamicResource MutedText}"
-                       Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}"/>
-        </StackPanel>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="{DynamicResource Error}" TextWrapping="Wrap"/>
+                <TextBlock Text="Még nem írtál értékelést." Foreground="{DynamicResource MutedText}"
+                           Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}"/>
+            </StackPanel>
 
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Reviews}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Style="{StaticResource ReviewCardStyle}"
-                                Command="{Binding DataContext.OpenReviewCommand,
-                                          RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                CommandParameter="{Binding}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Reviews}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource ReviewCardStyle}"
+                                    Command="{Binding DataContext.OpenReviewCommand,
+                                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" Width="40" Height="40" Margin="0,0,12,0" Stretch="Uniform" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding FranchiseName, Converter={StaticResource FranchiseLogo}}"/>
+                                    <Image Grid.Column="0" Width="40" Height="40" Margin="0,0,12,0" Stretch="Uniform" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding FranchiseName, Converter={StaticResource FranchiseLogo}}"/>
 
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding RestaurantName}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"/>
-                                    <TextBlock Text="{Binding FranchiseName, TargetNullValue=Nincs franchise}" Foreground="{DynamicResource SecondaryText}"/>
-                                    <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}" FontSize="12" Foreground="{DynamicResource MutedText}"/>
-                                </StackPanel>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding RestaurantName}" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryText}"/>
+                                        <TextBlock Text="{Binding FranchiseName, TargetNullValue=Nincs franchise}" Foreground="{DynamicResource SecondaryText}"/>
+                                        <TextBlock Text="{Binding CreatedAt, StringFormat={}{0:yyyy.MM.dd HH:mm}}" FontSize="12" Foreground="{DynamicResource MutedText}"/>
+                                    </StackPanel>
 
-                                <TextBlock Grid.Column="2" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Margin="12,0,0,0" Foreground="{DynamicResource PrimaryText}" Text="{Binding Overall, StringFormat={}{0:0.0} / 5}"/>
-                            </Grid>
-                        </Button>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                                    <TextBlock Grid.Column="2" VerticalAlignment="Center" FontSize="18" FontWeight="SemiBold" Margin="12,0,0,0" Foreground="{DynamicResource PrimaryText}" Text="{Binding Overall, StringFormat={}{0:0.0} / 5}"/>
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Visibility="{Binding IsReviewVisible, Converter={StaticResource BoolToVisibility}}">
+            <views:RateView DataContext="{Binding CurrentReview}"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Frontend"
         mc:Ignorable="d"
-        Title="Eat&amp;Rate" Height="600" Width="900"
+        Title="Eat&amp;Rate" Height="600" Width="1000"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource Background}"
         Foreground="{DynamicResource PrimaryText}">

@@ -12,8 +12,10 @@ namespace Frontend.ViewModels
     {
         private FranchiseDto? _selectedFranchise;
         private string _errorMessage = string.Empty;
+        public string FranchiseSummary => $"{Franchises.Count} étteremlánc · {Franchises.Sum(f => f.RestaurantCount)} étterem";
         private string _searchText = string.Empty;
         private string _franchiseSearchText = string.Empty;
+        private CreateReviewViewModel? _currentReview;
 
         public RestaurantsViewModel()
         {
@@ -28,7 +30,7 @@ namespace Frontend.ViewModels
             CollectionViewSource.GetDefaultView(Franchises).Filter = MatchesFranchiseSearch;
             _ = LoadFranchisesAsync();
 
-            RateCommand = new AsyncRelayCommand(p => RateAsync((RestaurantSummaryDto)p!));
+            RateCommand = new RelayCommand(p => StartRating((RestaurantSummaryDto)p!));
         }
 
         public ObservableCollection<FranchiseDto> Franchises { get; } = new();
@@ -40,7 +42,21 @@ namespace Frontend.ViewModels
         public ICommand RateCommand { get; }
 
         public bool IsFranchiseListVisible => SelectedFranchise is null;
-        public bool IsRestaurantListVisible => SelectedFranchise is not null;
+        public bool IsRestaurantListVisible => SelectedFranchise is not null && CurrentReview is null;
+        public bool IsReviewVisible => CurrentReview is not null;
+
+        public CreateReviewViewModel? CurrentReview
+        {
+            get => _currentReview;
+            private set
+            {
+                if (SetProperty(ref _currentReview, value))
+                {
+                    OnPropertyChanged(nameof(IsRestaurantListVisible));
+                    OnPropertyChanged(nameof(IsReviewVisible));
+                }
+            }
+        }
         public bool IsSearchPlaceholderVisible => string.IsNullOrEmpty(SearchText);
         public bool IsFranchiseSearchPlaceholderVisible => string.IsNullOrEmpty(FranchiseSearchText);
 
@@ -113,6 +129,7 @@ namespace Frontend.ViewModels
             {
                 foreach (var franchise in await ApiClient.GetFranchisesAsync())
                     Franchises.Add(franchise);
+                OnPropertyChanged(nameof(FranchiseSummary));
             }
             catch (ApiException ex)
             {
@@ -135,14 +152,16 @@ namespace Frontend.ViewModels
                 ErrorMessage = ex.Message;
             }
         }
-        private async Task RateAsync(RestaurantSummaryDto restaurant)
+        private void StartRating(RestaurantSummaryDto restaurant)
         {
             var vm = new CreateReviewViewModel(restaurant);
-            var window = new Views.CreateReviewWindow(vm) { Owner = System.Windows.Application.Current.MainWindow };
-            window.ShowDialog();
-
-            if (vm.IsSaved && SelectedFranchise is not null)
-                await OpenFranchiseAsync(SelectedFranchise);
+            vm.CloseRequested += async () =>
+            {
+                CurrentReview = null;
+                if (vm.IsSaved && SelectedFranchise is not null)
+                    await OpenFranchiseAsync(SelectedFranchise);
+            };
+            CurrentReview = vm;
         }
     }
 }

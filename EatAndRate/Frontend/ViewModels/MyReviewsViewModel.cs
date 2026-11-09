@@ -1,11 +1,7 @@
-using System.DirectoryServices;
 using System.Globalization;
-using System.Security.Policy;
-using System.Windows;
 using System.Windows.Input;
 using EatAndRate.Shared.DTOs.Reviews;
 using Frontend.Services;
-using Frontend.Views;
 
 namespace Frontend.ViewModels
 {
@@ -20,11 +16,12 @@ namespace Frontend.ViewModels
         private ReviewSortOption _selectedSort;
         private string _errorMessage = string.Empty;
         private bool _isLoaded;
+        private CreateReviewViewModel? _currentReview;
 
         public MyReviewsViewModel()
         {
             _selectedSort = SortOptions[0];
-            OpenReviewCommand = new AsyncRelayCommand(p => OpenReviewAsync((ReviewDto)p!));
+            OpenReviewCommand = new RelayCommand(p => OpenReview((ReviewDto)p!));
             _ = LoadAsync();
         }
 
@@ -54,7 +51,7 @@ namespace Frontend.ViewModels
             get => _selectedSort;
             set
             {
-                if (SetProperty(ref _selectedSort, value)) 
+                if (SetProperty(ref _selectedSort, value))
                     ApplySort();
             }
         }
@@ -66,6 +63,22 @@ namespace Frontend.ViewModels
         }
 
         public bool IsEmpty => _isLoaded && _allReviews.Count == 0;
+
+        public bool IsListVisible => CurrentReview is null;
+        public bool IsReviewVisible => CurrentReview is not null;
+
+        public CreateReviewViewModel? CurrentReview
+        {
+            get => _currentReview;
+            private set
+            {
+                if (SetProperty(ref _currentReview, value))
+                {
+                    OnPropertyChanged(nameof(IsListVisible));
+                    OnPropertyChanged(nameof(IsReviewVisible));
+                }
+            }
+        }
 
         private void ApplySort() => Reviews = SelectedSort.Sort(_allReviews).ToList();
 
@@ -88,14 +101,16 @@ namespace Frontend.ViewModels
             }
         }
 
-        private async Task OpenReviewAsync(ReviewDto review)
+        private void OpenReview(ReviewDto review)
         {
-            var detail = new ReviewDetailViewModel(review);
-            var window = new ReviewDetailWindow(detail) { Owner = Application.Current.MainWindow };
-            window.ShowDialog();
-
-            if (detail.HasChanges)
-                await LoadAsync();
+            var vm = new CreateReviewViewModel(review);
+            vm.CloseRequested += async () =>
+            {
+                CurrentReview = null;
+                if (vm.IsSaved)
+                    await LoadAsync();
+            };
+            CurrentReview = vm;
         }
     }
 }
