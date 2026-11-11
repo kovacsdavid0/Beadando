@@ -52,6 +52,20 @@ namespace API.Controllers
             return Ok(list);
         }
 
+        [HttpGet("reviews/recent")]
+        public async Task<ActionResult<List<ReviewDto>>> GetRecent([FromQuery] int count = 10)
+        {
+            count = Math.Clamp(count, 1, 50);
+
+            var list = await _db.Reviews
+                .OrderByDescending(r => r.CreatedAt)
+                .Take(count)
+                .Select(ToDto)
+                .ToListAsync();
+
+            return Ok(list);
+        }
+
         [HttpGet("reviews/{id}")]
         public async Task<ActionResult<ReviewDto>> GetById(int id)
         {

@@ -3,6 +3,8 @@ using EatAndRate.Shared.DTOs.Franchises;
 using EatAndRate.Shared.DTOs.Restaurants;
 using EatAndRate.Shared.DTOs.Reviews;
 using Frontend.Services;
+using System.Windows.Input;
+
 
 namespace Frontend.ViewModels
 
@@ -16,13 +18,27 @@ namespace Frontend.ViewModels
         private bool _hasNoReviews;
         private FranchiseDto? _topFranchise;
 
+        private RecentReviewItem? _selectedReview;
+
         public DashboardViewModel()
         {
-            // A konstruktor nem tud await-elni, a hibákat a LoadAsync kezeli
+            OpenReviewCommand = new RelayCommand(p => SelectedReview = (RecentReviewItem)p!);
+            CloseReviewCommand = new RelayCommand(_ => SelectedReview = null);
             _ = LoadAsync();
         }
 
+        public ICommand OpenReviewCommand { get; }
+        public ICommand CloseReviewCommand { get; }
         public string Username => Session.User?.Username ?? string.Empty;
+
+        public RecentReviewItem? SelectedReview
+        {
+            get => _selectedReview;
+            private set
+            {
+                if (SetProperty(ref _selectedReview, value)) OnPropertyChanged(nameof(IsReviewOpen));
+            }
+        }
 
         public int ReviewsThisWeek
         {
@@ -53,6 +69,8 @@ namespace Frontend.ViewModels
         }
 
         public bool HasError => !string.IsNullOrEmpty(ErrorMessage);
+
+        public bool IsReviewOpen => SelectedReview is not null;
 
         public ObservableCollection<RecentReviewItem> RecentReviews { get; } = new();
 
@@ -87,9 +105,11 @@ namespace Frontend.ViewModels
         {
             try
             {
-                var reviews = await ApiClient.GetMyReviewsAsync();
-                ShowStats(reviews);
-                ShowRecentReviews(reviews);
+                var myReviews = await ApiClient.GetMyReviewsAsync();
+                ShowStats(myReviews);
+
+                var recentReviews = await ApiClient.GetRecentReviewsAsync(4);
+                ShowRecentReviews(recentReviews);
                 await LoadTopFranchiseAsync();
             }
             catch (Exception ex)
@@ -123,7 +143,7 @@ namespace Frontend.ViewModels
         private void ShowRecentReviews(List<ReviewDto> reviews)
         {
             // Az API a legfrissebbel kezdve adja vissza a listát
-            foreach (var review in reviews.Take(4))
+            foreach (var review in reviews)
                 RecentReviews.Add(new RecentReviewItem(review));
 
             HasNoReviews = reviews.Count == 0;

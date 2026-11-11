@@ -10,18 +10,28 @@ namespace Frontend.ViewModels
     {
         public RecentReviewItem(ReviewDto review)
         {
+            Review = review; 
             RestaurantName = review.RestaurantName;
             Comment = review.Comment ?? string.Empty;
+            CommentPreview = Comment
+                .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .FirstOrDefault(p => p.Length > 0) ?? string.Empty;
             Rating = review.Overall;
 
-            var parts = new[] { review.City, FormatAge(review.CreatedAt) };
+            var parts = new[] { review.Username, review.City, FormatAge(review.CreatedAt) };
             Details = string.Join(" · ", parts.Where(p => !string.IsNullOrEmpty(p)));
         }
 
         public string RestaurantName { get; }
         public string Details { get; }
         public string Comment { get; }
+        public string CommentPreview { get; }
         public double Rating { get; }
+
+        public ReviewDto Review { get; }
+
+        public string CreatedAtText => Review.CreatedAt.ToLocalTime().ToString("yyyy.MM.dd HH:mm");
 
         // A CreatedAt UTC-ben van tárolva, ezért a UtcNow-hoz hasonlítjuk
         private static string FormatAge(DateTime createdAt)

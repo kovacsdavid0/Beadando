@@ -2,19 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Háttér -->
-    <SolidColorBrush x:Key="Background"        Color="#070605"/>
-    <SolidColorBrush x:Key="Surface"           Color="Black"/>
-    <SolidColorBrush x:Key="SurfaceAlt"        Color="#161310"/>
+    <SolidColorBrush x:Key="Background"        Color="#14120F"/>
+    <SolidColorBrush x:Key="Surface"           Color="#1E1B18"/>
+    <SolidColorBrush x:Key="SurfaceAlt"        Color="#2A2622"/>
 
     <!-- Szöveg -->
-    <SolidColorBrush x:Key="PrimaryText"       Color="#DEDAD6"/>
-    <SolidColorBrush x:Key="SecondaryText"     Color="#B6AFA8"/>
-    <SolidColorBrush x:Key="MutedText"         Color="#938A82"/>
-    <SolidColorBrush x:Key="PlaceholderText"   Color="#524A42"/>
+    <SolidColorBrush x:Key="PrimaryText"       Color="#EAE6E2"/>
+    <SolidColorBrush x:Key="SecondaryText"     Color="#C4BDB6"/>
+    <SolidColorBrush x:Key="MutedText"         Color="#A39A92"/>
+    <SolidColorBrush x:Key="PlaceholderText"   Color="#6E655C"/>
 
     <!-- Keretek -->
-    <SolidColorBrush x:Key="Border"            Color="#211D19"/>
-    <SolidColorBrush x:Key="BorderStrong"      Color="#312B25"/>
+    <SolidColorBrush x:Key="Border"            Color="#36302A"/>
+    <SolidColorBrush x:Key="BorderStrong"      Color="#4A423A"/>
 
     <!-- Sidebar -->
     <SolidColorBrush x:Key="SidebarBackground" Color="#DEDAD6"/>
@@ -28,10 +28,10 @@
     <SolidColorBrush x:Key="PrimaryButtonText"    Color="White"/>
 
     <!-- Secondary gomb -->
-    <SolidColorBrush x:Key="SecondaryButton"        Color="#1E1A16"/>
-    <SolidColorBrush x:Key="SecondaryButtonHover"   Color="#29241F"/>
-    <SolidColorBrush x:Key="SecondaryButtonPressed" Color="#38312A"/>
-    <SolidColorBrush x:Key="SecondaryButtonText"    Color="#DEDAD6"/>
+    <SolidColorBrush x:Key="SecondaryButton"        Color="#2A2622"/>
+    <SolidColorBrush x:Key="SecondaryButtonHover"   Color="#36302A"/>
+    <SolidColorBrush x:Key="SecondaryButtonPressed" Color="#443C35"/>
+    <SolidColorBrush x:Key="SecondaryButtonText"    Color="#EAE6E2"/>
 
     <!-- Danger gomb (törlés, kilépés) -->
     <SolidColorBrush x:Key="DangerButton"        Color="#DC3545"/>
@@ -40,12 +40,12 @@
     <SolidColorBrush x:Key="DangerButtonText"    Color="White"/>
 
     <!-- Letiltott állapot -->
-    <SolidColorBrush x:Key="DisabledBackground" Color="#161310"/>
-    <SolidColorBrush x:Key="DisabledText"       Color="#524A42"/>
+    <SolidColorBrush x:Key="DisabledBackground" Color="#241F1B"/>
+    <SolidColorBrush x:Key="DisabledText"       Color="#6E655C"/>
 
     <!-- Scrollbar -->
-    <SolidColorBrush x:Key="ScrollThumb"       Color="#38312A"/>
-    <SolidColorBrush x:Key="ScrollThumbHover"  Color="#524A42"/>
+    <SolidColorBrush x:Key="ScrollThumb"       Color="#4A423A"/>
+    <SolidColorBrush x:Key="ScrollThumbHover"  Color="#62584F"/>
 
     <!-- Státuszszínek -->
     <SolidColorBrush x:Key="Success" Color="#198754"/>

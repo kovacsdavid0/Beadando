@@ -72,8 +72,8 @@
 
                     <StackPanel Margin="0,0,0,8">
                         <TextBlock Text="Legutóbbi értékelések" Style="{StaticResource CardTitleStyle}"/>
-                        <TextBlock Text="A saját értékeléseid" Style="{StaticResource CardDetailStyle}"/>
-                        <TextBlock Text="Még nincs értékelésed." Style="{StaticResource CardDetailStyle}" Margin="0,12,0,0"
+                        <TextBlock Text="A közösség értékelései" Style="{StaticResource CardDetailStyle}"/>
+                        <TextBlock Text="Még nincsenek értékelések." Style="{StaticResource CardDetailStyle}" Margin="0,12,0,0"
                            Visibility="{Binding HasNoReviews, Converter={StaticResource BoolToVisibility}}"/>
                     </StackPanel>
 
@@ -81,27 +81,33 @@
                         <ItemsControl ItemsSource="{Binding RecentReviews}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1" Padding="0,8">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                    <Button Style="{StaticResource RecentRowButtonStyle}"
+                                        Command="{Binding DataContext.OpenReviewCommand,
+                                        RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}">
+                                        <Border BorderBrush="{DynamicResource Border}" BorderThickness="0,0,0,1" Padding="10,8">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                                            <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                                                <TextBlock Text="{Binding RestaurantName}" Style="{StaticResource CardItemTitleStyle}"/>
-                                                <TextBlock Text="{Binding Details}" Style="{StaticResource CardDetailStyle}"/>
-                                            </StackPanel>
+                                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                                    <TextBlock Text="{Binding RestaurantName}" Style="{StaticResource CardItemTitleStyle}"/>
+                                                    <TextBlock Text="{Binding Details}" Style="{StaticResource CardDetailStyle}"/>
+                                                </StackPanel>
 
-                                            <StackPanel Grid.Column="1">
-                                                <TextBlock Style="{StaticResource CardItemTitleStyle}" HorizontalAlignment="Right">
-                                            <Run Text="★" Foreground="{DynamicResource Warning}"/>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Style="{StaticResource CardItemTitleStyle}" HorizontalAlignment="Right">
+                                            <Run Style="{StaticResource StarRunStyle}"/>
                                             <Run Text="{Binding Rating, Mode=OneWay, StringFormat={}{0:0.0}}"/>
-                                                </TextBlock>
-                                                <TextBlock Text="{Binding Comment}" Style="{StaticResource CardDetailStyle}" HorizontalAlignment="Right"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding CommentPreview}" Style="{StaticResource CardDetailStyle}" HorizontalAlignment="Right"
+                                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </Button>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -127,7 +133,7 @@
 
                                     <TextBlock Text="{Binding TopFranchise.Name}" Style="{StaticResource CardItemTitleStyle}"/>
                                     <TextBlock Grid.Column="1" Style="{StaticResource CardItemTitleStyle}">
-                                <Run Text="★" Foreground="{DynamicResource Warning}"/>
+                                <Run Style="{StaticResource StarRunStyle}"/>
                                 <Run Text="{Binding TopFranchise.AvgOverall, Mode=OneWay, StringFormat={}{0:0.0}}"/>
                                     </TextBlock>
                                 </Grid>
@@ -150,7 +156,7 @@
                                                 <TextBlock Text="{Binding City}" Style="{StaticResource CardDetailStyle}"/>
                                             </StackPanel>
                                             <TextBlock Grid.Column="1" Style="{StaticResource CardItemTitleStyle}">
-                                        <Run Text="★" Foreground="{DynamicResource Warning}"/>
+                                        <Run Style="{StaticResource StarRunStyle}"/>
                                         <Run Text="{Binding AvgOverall, Mode=OneWay, StringFormat={}{0:0.0}}"/>
                                             </TextBlock>
                                         </Grid>
@@ -160,6 +166,78 @@
                         </ItemsControl>
                     </StackPanel>
                 </ScrollViewer>
+            </Border>
+        </Grid>
+        <Grid Grid.RowSpan="4"
+      Visibility="{Binding IsReviewOpen, Converter={StaticResource BoolToVisibility}}">
+
+            <Border Background="#50000000">
+                <Border.Effect>
+                    <BlurEffect Radius="18"/>
+                </Border.Effect>
+                <Border.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding CloseReviewCommand}"/>
+                </Border.InputBindings>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}" Padding="24" Width="460"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            DataContext="{Binding SelectedReview}">
+                <StackPanel>
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" Style="{StaticResource SecondaryButtonStyle}"
+                        ToolTip="Bezárás" AutomationProperties.Name="Bezárás"
+                        Command="{Binding DataContext.CloseReviewCommand,
+                                  RelativeSource={RelativeSource AncestorType=UserControl}}">
+                            <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets"/>
+                        </Button>
+                        <StackPanel>
+                            <TextBlock Text="{Binding RestaurantName}" Style="{StaticResource CardTitleStyle}"
+                               TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding Review.FranchiseName, TargetNullValue=Nincs franchise}"
+                               Style="{StaticResource CardDetailStyle}"/>
+                        </StackPanel>
+                    </DockPanel>
+
+                    <TextBlock Style="{StaticResource CardDetailStyle}" Margin="0,8,0,0">
+                <Run Text="{Binding Review.Username, Mode=OneWay}"/>
+                <Run Text=" · "/>
+                <Run Text="{Binding CreatedAtText, Mode=OneWay}"/>
+                    </TextBlock>
+
+                    <Border Style="{StaticResource CardInsetStyle}" Padding="16" Margin="0,16,0,0">
+                        <TextBlock HorizontalAlignment="Center">
+                    <Run Style="{StaticResource StarRunStyle}" FontSize="28"/>
+                    <Run Text="{Binding Rating, Mode=OneWay, StringFormat={}{0:0.0}}" FontSize="28" FontWeight="Bold"
+                         Foreground="{DynamicResource PrimaryText}"/>
+                    <Run Text=" / 5" FontSize="14" Foreground="{DynamicResource MutedText}"/>
+                        </TextBlock>
+                    </Border>
+                    
+                    <DockPanel Margin="0,16,0,0">
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Review.FoodRating, StringFormat={}{0} / 5}"
+                           Style="{StaticResource CardItemTitleStyle}"/>
+                        <TextBlock Text="Étel" Style="{StaticResource CardRowLabelStyle}"/>
+                    </DockPanel>
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Review.ServiceRating, StringFormat={}{0} / 5}"
+                           Style="{StaticResource CardItemTitleStyle}"/>
+                        <TextBlock Text="Kiszolgálás" Style="{StaticResource CardRowLabelStyle}"/>
+                    </DockPanel>
+                    <DockPanel Margin="0,10,0,0">
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Review.AtmosphereRating, StringFormat={}{0} / 5}"
+                           Style="{StaticResource CardItemTitleStyle}"/>
+                        <TextBlock Text="Hangulat" Style="{StaticResource CardRowLabelStyle}"/>
+                    </DockPanel>
+
+                    <Border Height="1" Background="{DynamicResource Border}" Margin="0,16"/>
+
+                    <TextBlock Text="Megjegyzés" Style="{StaticResource CardItemTitleStyle}"/>
+                    <ScrollViewer MaxHeight="160" VerticalScrollBarVisibility="Auto" Margin="0,6,0,0">
+                        <TextBlock Text="{Binding Comment, TargetNullValue='—'}" TextWrapping="Wrap"
+                           Style="{StaticResource CardDetailStyle}"/>
+                    </ScrollViewer>
+                </StackPanel>
             </Border>
         </Grid>
     </Grid>

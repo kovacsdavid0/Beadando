@@ -57,4 +57,14 @@
         <Setter Property="Margin" Value="0,8,0,0"/>
     </Style>
 
+    <Style x:Key="StarRunStyle" TargetType="Run">
+        <Setter Property="Text" Value="★"/>
+        <Setter Property="Foreground" Value="{DynamicResource Warning}"/>
+    </Style>
+
+    <Style x:Key="CardRowLabelStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource InterFont}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryText}"/>
+    </Style>
+
 </ResourceDictionary>
