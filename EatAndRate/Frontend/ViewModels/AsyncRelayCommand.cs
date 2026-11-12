@@ -3,8 +3,7 @@ using System.Windows.Input;
 
 namespace Frontend.ViewModels
 {
-    // Aszinkron ICommand: a Task-ot végigvárja, és elkapja a kivételeket,
-    // így egy váratlan hiba nem dönti be az alkalmazást (async void probléma)
+
     public class AsyncRelayCommand : ICommand
     {
         private readonly Func<object?, Task> _execute;
@@ -28,8 +27,7 @@ namespace Frontend.ViewModels
 
         public bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
 
-        // Az ICommand.Execute void, ezért itt muszáj async void-ot használni,
-        // de minden kivételt elkapunk, így nem jut el a Dispatcherig
+
         public async void Execute(object? parameter)
         {
             try

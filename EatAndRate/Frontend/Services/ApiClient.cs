@@ -103,8 +103,6 @@ namespace Frontend.Services
         }
 
 
-        // Az API vagy sima szöveget ad vissza (pl. Conflict("...")),
-        // vagy ValidationProblemDetails JSON-t az "errors" mezővel.
         private static async Task<string> ReadErrorAsync(HttpResponseMessage response)
         {
             var text = await response.Content.ReadAsStringAsync();

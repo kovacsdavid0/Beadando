@@ -5,7 +5,6 @@ using System.Windows.Media.Imaging;
 
 namespace Frontend.Converters
 {
-    // "Pizza King" -> Images/RestaurantLogos/pizzaking_logo.png
     public class FranchiseLogoConverter : IValueConverter
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)

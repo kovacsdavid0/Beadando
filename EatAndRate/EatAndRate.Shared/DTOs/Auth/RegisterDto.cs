@@ -7,15 +7,15 @@ namespace EatAndRate.Shared.DTOs.Auth
 {
     public class RegisterDto
     {
-        [Required(ErrorMessage = "Username kell")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Username 3 es 50 karakter")]
+        [Required(ErrorMessage = "Username kötelező")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "A username 3 és 50 karakter között kell legyen")]
         public string Username { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Email kell")]
-        [EmailAddress(ErrorMessage = "nem jo")]
+        [Required(ErrorMessage = "Email kötelező")]
+        [EmailAddress(ErrorMessage = "A megadott email cím helytelen")]
         [StringLength(100, ErrorMessage = "Email max 100 karakter")]
         public string Email { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Jelszó kell")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Jelszó 6 es 100 karakter")]
+        [Required(ErrorMessage = "Jelszó kötelező")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "A jelszó 6 és 100 karakter között kell legyen")]
         public string Password { get; set; } = string.Empty;
     }
 }

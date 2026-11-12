@@ -7,8 +7,8 @@ namespace EatAndRate.Shared.DTOs.Franchises
 {
     public class CreateFranchiseDto
     {
-        [Required(ErrorMessage = "Név kell")]
-        [MaxLength(100, ErrorMessage = "Név max 100 karakter")]
+        [Required(ErrorMessage = "Név kötelező")]
+        [MaxLength(100, ErrorMessage = "A név max 100 karakter lehet")]
         public string Name { get; set; } = string.Empty;
     }
 }
